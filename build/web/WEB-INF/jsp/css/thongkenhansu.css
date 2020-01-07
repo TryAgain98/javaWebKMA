@@ -1,0 +1,16 @@
+.table-list{
+  padding-top:  20px;
+  width: 100%;
+  position: relative;
+}
+
+
+.table-list .input-area{
+  width: 200px;
+  position: absolute;
+  top: 30px;
+  right: 50px;
+}
+.table-list--contain{
+  margin-top: 50px;
+}
