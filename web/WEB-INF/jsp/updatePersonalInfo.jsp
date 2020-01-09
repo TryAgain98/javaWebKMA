@@ -181,20 +181,10 @@
                     </div>
                 </div>
 
-                        <c:if test="${quyen == 'Nhân Sự'}" > <button style="width: 100%;" type="submit" class="btn btn-primary">LƯU</button>
+                       <button style="width: 100%;" type="submit" class="btn btn-primary">LƯU</button>
                               
-        </c:if>
-                <c:if test="${quyen != 'Nhân Sự'}" >
-                <div style="text-align: center ; margin-top: 20px;">
-                        
-                        <button style="width: 30%; " id="btnMyself" type="submit" class="btn btn-primary">LƯU</button>
-                        
-                        <button type="button" style="width: 30%; "  class="btn btn-danger" id='btn_connect' >
-
-                            KẾT NỐI VÂN TAY
-
-                        </button>
-                </div></c:if>
+    
+               
             </spring:form>
         </div>
 

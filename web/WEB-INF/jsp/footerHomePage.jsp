@@ -27,10 +27,10 @@
                         <div class="footer__location">
                             <h6>Mạng xã hội:</h6>
                             <div class="img_location">
-                                <a href=""><img src="/AdminKMA/images/facebook-icon.png" alt=""></a>
-                                <a href=""><img src="/AdminKMA/images/Google-plus-icon.png" alt=""></a>
-                                <a href=""><img src="/AdminKMA/images/mail-icon.png" alt=""></a>
-                                <a href=""><img src="/AdminKMA/images/youtube-icon.png" alt=""></a>
+                                <a href="https://www.facebook.com/groups/KmaPro/"><img src="/AdminKMA/images/facebook-icon.png" alt=""></a>
+                                <a href="https://google.com"><img src="/AdminKMA/images/Google-plus-icon.png" alt=""></a>
+                                <a href="https://mail.google.com"><img src="/AdminKMA/images/mail-icon.png" alt=""></a>
+                                <a href="https://www.youtube.com/?gl=VN"><img src="/AdminKMA/images/youtube-icon.png" alt=""></a>
                             </div>
                         </div>
                     </div>

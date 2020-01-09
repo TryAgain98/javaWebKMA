@@ -42,6 +42,9 @@ public class EmployeeController {
     @RequestMapping("/saveAddEmployee")
     public String saveAddEmployee(Model model, @RequestParam("gender") String gender, @RequestParam("quyen") String quyen, @ModelAttribute("e") Employee e, @RequestParam("idRoom") int idRoom
     ) throws SQLException, ParseException {
+        if(e.getIdFingerprint().equals("")){
+            e.setIdFingerprint("0");
+        }
          if (me.checkRFID(e.getIdRFID()) == true) {
             model.addAttribute("e", e);
             List<Room> lr = mr.showKhoa_PhongBan();
