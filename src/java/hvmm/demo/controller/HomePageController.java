@@ -161,7 +161,7 @@ public class HomePageController {
     }
 
     @RequestMapping("/updatePersonalInfo")
-    public String updatePersonalInfo(Model model, @RequestParam("idRFID") String idRFID, @RequestParam("idFingerprint") String idFingerprint) throws SQLException {
+    public String updatePersonalInfo(Model model, HttpSession session, @RequestParam("idRFID") String idRFID, @RequestParam("idFingerprint") String idFingerprint) throws SQLException {
         List<Room> lp = mr.showPhongBan();
         List<Room> lk = mr.showKhoa();
         Contact rl = mc.showContact();
@@ -172,7 +172,7 @@ public class HomePageController {
         model.addAttribute("e", e);
         List<Room> lr = mr.showKhoa_PhongBan();
         model.addAttribute("lr", lr);
-
+        
         return "updatePersonalInfo";
     }
 
@@ -200,6 +200,13 @@ public class HomePageController {
         model.addAttribute("lp", lp);
         model.addAttribute("lk", lk);
         model.addAttribute("inform", "Cập Nhật Thành Công");
+        
+        session.setAttribute("image", e.getImage());
+
+        session.setAttribute("idFT", e.getIdFingerprint());
+        session.setAttribute("name", e.getFullName());
+
+        session.setAttribute("quyen", e.getPowerful());
         return "InfoPersonal";
     }
 

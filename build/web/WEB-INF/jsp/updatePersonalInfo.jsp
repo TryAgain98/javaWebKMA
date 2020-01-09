@@ -36,7 +36,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.standalone.css" />
         <link rel="stylesheet" type="text/css" href="/AdminKMA/css/jquery.ptTimeSelect.css" />
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" type="text/css" media="all" />
-        
+         <script src="http://localhost:8080/AdminKMA/vendor/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="http://localhost:8080/AdminKMA/vendor/sweetalert2.min.css">
         <style>
             .form input,.form{
                 font-size: 15px;
@@ -180,7 +181,20 @@
                     </div>
                 </div>
 
-                <button style="width: 100%;" type="submit" class="btn btn-primary">LƯU</button>
+                        <c:if test="${quyen == 'Nhân Sự'}" > <button style="width: 100%;" type="submit" class="btn btn-primary">LƯU</button>
+                              
+        </c:if>
+                <c:if test="${quyen != 'Nhân Sự'}" >
+                <div style="text-align: center ; margin-top: 20px;">
+                        
+                        <button style="width: 30%; " id="btnMyself" type="submit" class="btn btn-primary">LƯU</button>
+                        
+                        <button type="button" style="width: 30%; "  class="btn btn-danger" id='btn_connect' >
+
+                            KẾT NỐI VÂN TAY
+
+                        </button>
+                </div></c:if>
             </spring:form>
         </div>
 
@@ -214,15 +228,7 @@
                     })
                     return false;
                 }
-                var idFingerprint = document.getElementById('idFingerprint').value;
-                if (idFingerprint == "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'CẢNH BÁO',
-                        text: 'Chưa có vân tay của bạn ',
-                    })
-                    return false;
-                }
+                
 
                 var email = document.getElementById('email').value;
                 if (email == "") {

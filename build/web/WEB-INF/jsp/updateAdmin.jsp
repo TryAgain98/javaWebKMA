@@ -33,6 +33,7 @@
             <div class="content">
                 <spring:form  action="/AdminKMA/saveUpdateAdmin" method="post" onsubmit="return validateForm()"  modelAttribute="e" >
                     <h4 style="text-align: center" class="tittleForm">Thông Tin Cá Nhân</h4>
+                     <input type="hidden" name="Fingerprint"   value="${e.idFingerprint}" class="form-control"  />
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="exampleFormControlInput1" class="TittleChildren">id RFID<span class="sao">*</span></label>
@@ -40,7 +41,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="exampleFormControlInput1" class="TittleChildren">id Finterprint<span class="sao">*</span></label>
-                            <spring:input type="text" path="idFingerprint" class="form-control" readonly="true" id="idFingerprint" placeholder="Nhập mật khẩu"/>
+                            <spring:input type="text" path="idFingerprint" class="form-control" readonly="false" id="idFingerprint" placeholder="Nhập mật khẩu"/>
                         </div>
                     </div>
                     <div class="row">
@@ -133,10 +134,18 @@
                         </div>
                     </div>
 
-                 <button type="button"  class="btn btn-danger" id='buttonBack' >
+                 <div style="text-align: center">
+                        <button type="button"  class="btn btn-danger" id='buttonBack' >
                             <a href="/AdminKMA/Employee" id='aMySelf' style="color: white" data-id="test-{$sads}"><i class="fas fa-backward" style="margin-right:  10px;color: white"></i>TRỞ VỀ</a>
                         </button>
-                        <button style="width: 89%;" type="submit" class="btn btn-primary">Lưu</button>
+                        <button style="width: 30%; " id="btnMyself" type="submit" class="btn btn-primary">LƯU</button>
+                        
+                        <button type="button" style="width: 30%; "  class="btn btn-danger" id='btn_connect' >
+
+                            KẾT NỐI VÂN TAY
+
+                        </button>
+                    </div>
                 </spring:form>
             </div>
 
@@ -168,15 +177,7 @@
                     })
                     return false;
                 }
-                var idFingerprint = document.getElementById('idFingerprint').value;
-                if (idFingerprint == "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'CẢNH BÁO',
-                        text: 'Chưa có vân tay của bạn ',
-                    })
-                    return false;
-                }
+                
 
                 var email = document.getElementById('email').value;
                 if (email == "") {

@@ -7,7 +7,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Ela Admin - HTML5 Admin Template</title>
-
+        <script src="http://localhost:2604/socket.io/socket.io.js"></script>
+        <script src="http://localhost:2604/jquery.js"></script>
+        <script src="http://localhost:2604/process.js"></script>
         <meta name="description" content="Ela Admin - HTML5 Admin Template">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,9 +18,7 @@
         <link rel="stylesheet" href="http://localhost:8080/AdminKMA/css/style.css">
         <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
-        <script src="http://localhost:2604/socket.io/socket.io.js"></script>
-        <script src="http://localhost:2604/jquery.js"></script>
-        <script src="http://localhost:2604/process.js"></script>
+      
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 
@@ -44,11 +44,11 @@
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="exampleFormControlInput1" class="TittleChildren">id RFID<span class="sao">*</span></label>
-                            <spring:input type="text"  path="idRFID" value="" readonly="false" class="form-control" id="idRFID" placeholder="waiting..."/>
+                            <spring:input type="text"  path="idRFID" value="" readonly="false" class="form-control" id="idRFID" placeholder="Quẹt thẻ ... "/>
                         </div>
                         <div class="form-group col-6">
                             <label for="exampleFormControlInput1" class="TittleChildren">id Finterprint<span class="sao">*</span></label>
-                            <spring:input type="text" path="idFingerprint" class="form-control" readonly="false"  id="idFingerprint" placeholder="waiting..."/>
+                            <spring:input type="text" path="idFingerprint" class="form-control" readonly="false"  id="idFingerprint" placeholder="Vân Tay Của Bạn..."/>
                         </div>
                     </div>
                     <div class="row">
@@ -142,10 +142,15 @@
                     </div>
 
                     <div style="text-align: center">
-                        <button style="width: 40%; " id="btnMyself" type="submit" class="btn btn-primary">THÊM</button>
-                        <button type="button" style="width: 40%; "  class="btn btn-danger" id='btn_connect' >
+                        <button style="width: 25%; " id="btnMyself" type="submit" class="btn btn-primary">THÊM</button>
+                        <button type="button" style="width: 25%; "  class="btn btn-danger" id='btn_connect' >
 
-                            KẾT NỐI
+                            KẾT NỐI THẺ
+
+                        </button>
+                        <button type="button" style="width: 25%; "  class="btn btn-danger" id='btn_connect' >
+
+                            KẾT NỐI VÂN TAY
 
                         </button>
                     </div>
@@ -181,15 +186,7 @@
                     })
                     return false;
                 }
-                var idFingerprint = document.getElementById('idFingerprint').value;
-                if (idFingerprint == "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'CẢNH BÁO',
-                        text: 'Chưa có vân tay của bạn ',
-                    })
-                    return false;
-                }
+                
 
                 var email = document.getElementById('email').value;
                 if (email == "") {

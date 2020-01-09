@@ -42,6 +42,13 @@ public class EmployeeController {
     @RequestMapping("/saveAddEmployee")
     public String saveAddEmployee(Model model, @RequestParam("gender") String gender, @RequestParam("quyen") String quyen, @ModelAttribute("e") Employee e, @RequestParam("idRoom") int idRoom
     ) throws SQLException, ParseException {
+         if (me.checkRFID(e.getIdRFID()) == true) {
+            model.addAttribute("e", e);
+            List<Room> lr = mr.showKhoa_PhongBan();
+            model.addAttribute("lr", lr);
+            model.addAttribute("warn", "Thẻ đã tồn tại");
+            return "AddEmployee";
+        }
         if (me.checkEmail(e.getEmail()) == true) {
             model.addAttribute("e", e);
             List<Room> lr = mr.showKhoa_PhongBan();
@@ -94,9 +101,9 @@ public class EmployeeController {
     }
 
     @RequestMapping("/saveUpdateEmployee")
-    public String saveUpdateEmployee(Model model,@RequestParam("RFID") String idRFID, @RequestParam("Fingerprint") String idFingerprint, @RequestParam("gender") String gender, @RequestParam("quyen") String quyen, @ModelAttribute("e") Employee e, @RequestParam("idRoom") int idRoom, @RequestParam("oldImage") String image) throws SQLException, ParseException {
+    public String saveUpdateEmployee(Model model, @RequestParam("gender") String gender, @RequestParam("quyen") String quyen, @ModelAttribute("e") Employee e, @RequestParam("idRoom") int idRoom, @RequestParam("oldImage") String image) throws SQLException, ParseException {
         
-        
+        System.out.println("1");
         String keyAES = ec.random(ec.ranomKey());
         e.setKeyAES(keyAES);
         e.setPass(ec.encrypt(e.getPass(), keyAES));
@@ -108,11 +115,13 @@ public class EmployeeController {
         if (e.getImage().equals("")) {
             e.setImage(image);
         }
-       
+       System.out.println("2");
         me.update(e);
+        System.out.println("3");
         List<Employee> le = me.show();
         model.addAttribute("lep", le);
         model.addAttribute("inform", "Cập Nhật Thành Công");
+        
         return "Employee";
     }
 }

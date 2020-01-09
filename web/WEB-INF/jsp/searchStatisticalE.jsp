@@ -90,8 +90,9 @@
                 <div class="container">
                     <div class="breadcrumb-area__contain text-center">
                         <h2 class="">THỐNG KÊ CÁ NHÂN</h2>
-                        <div class="breadcrumb-area__contain--link">
-
+                         <div class="breadcrumb-area__contain--link">
+                            <a href="/AdminKMA/HomePage">Trang chủ</a>
+                            <a href="/AdminKMA/statisticalEmployee">Thống Kê Nhân Sự</a>
                         </div>
                     </div>
                 </div>
@@ -148,7 +149,7 @@
                     <input type="hidden" value="${e.idRFID}" name="idRFID" />
                     <div class="row form-looking">
 
-                        <div class="col-md-3 TittleChildren text-right tillteSearchDate">Chọn Ngày Bắt Đầu : </div>
+                        <div class="col-md-3 TittleChildren text-right tillteSearchDate">Chọn Ngày Bắt Đầu (*): </div>
                         <div class="col-md-2"> 
                             <div id="filterDate2">       
                                 <div class="demo">
@@ -159,7 +160,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 TittleChildren text-right tillteSearchDate">Chọn Ngày Kết Thúc :</div>
+                        <div class="col-md-3 TittleChildren text-right tillteSearchDate">Chọn Ngày Kết Thúc (*):</div>
                         <div class="col-md-2"> 
                             <div id="filterDate2">    
                                 <div class="demo">
@@ -254,6 +255,23 @@
                         icon: 'error',
                         title: 'CẢNH BÁO',
                         text: 'Ngày Kết Thúc Phải Lớn Hơn Ngày Bắt Đầu',
+                    })
+                    return false;
+                }
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+                today = yyyy + '-' + mm + '-' + dd;
+
+             
+                
+                var yToday = new Date(today);
+                if (xStart > yToday || yEnd > yToday) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'CẢNH BÁO',
+                        text: 'Ngày Không lớn hơn ngày hiện tại ',
                     })
                     return false;
                 }

@@ -28,7 +28,8 @@ public class mEmployee {
 
     Connection con;
     Encryption ep = new Encryption();
-    mStatistical ms=new mStatistical();
+    mStatistical ms = new mStatistical();
+
     public mEmployee() {
         try {
             Connector db = new Connector();
@@ -92,7 +93,8 @@ public class mEmployee {
         }
         return le;
     }
-public List<Employee> showAdmin(int idRoom) throws SQLException {
+
+    public List<Employee> showAdmin(int idRoom) throws SQLException {
         String sql = "select * from room as r join employee as e on e.idroom=r.idroom where r.idRoom =" + idRoom;
         PreparedStatement pstmt = con.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
@@ -117,6 +119,7 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
         }
         return le;
     }
+
     public List<Employee> show() throws SQLException {
         String sql = "select *,DATE_FORMAT(birthday, '%d-%m-%Y') as date from employee as e join room as r on r.idroom=e.idroom where powerful != 'admin'";
         PreparedStatement pstmt = con.prepareStatement(sql);
@@ -219,15 +222,15 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
             Logger.getLogger(mEmployee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteIDRoom(int idRoom) throws SQLException {
 
         ms.deleteStatisticalIDRoom(idRoom);
-        String sql = "delete from employee where idRoom = "+idRoom;
+        String sql = "delete from employee where idRoom = " + idRoom;
 
         try {
             PreparedStatement pstmt = con.prepareStatement(sql);
-           
+
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(mEmployee.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,13 +239,11 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
 
     public void update(Employee e) throws SQLException, ParseException {
         
-        
-        
         SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd-MM-yyyy");
         Date d1 = dateFormatOfStringInDB.parse(e.getBirthday());
         SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormatYouWant.format(d1);
-        String sql = "UPDATE employee SET email=?, pass=?, fullname=?,phone=?,address=?,birthday=?,gender=?,positionn=?,powerful=?,csalary=?,image=?,idroom=?,keyAES=? where idrfid=?  and idfingerprint =?";
+        String sql = "UPDATE employee SET email=?, pass=?, fullname=?,phone=?,address=?,birthday=?,gender=?,positionn=?,powerful=?,csalary=?,image=?,idroom=?,keyAES=?,idfingerprint=? where idrfid=?  ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, e.getEmail());
         pstmt.setString(2, e.getPass());
@@ -257,10 +258,11 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
         pstmt.setString(11, e.getImage());
         pstmt.setInt(12, e.getIdRoom());
         pstmt.setString(13, e.getKeyAES());
-       
-        pstmt.setString(14, e.getIdRFID());
-        pstmt.setString(15, e.getIdFingerprint());
-     
+         pstmt.setString(14, e.getIdFingerprint());
+      
+        pstmt.setString(15, e.getIdRFID());
+        
+
         pstmt.executeUpdate();
 
     }
@@ -270,7 +272,7 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
         Date d1 = dateFormatOfStringInDB.parse(e.getBirthday());
         SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormatYouWant.format(d1);
-        String sql = "UPDATE employee SET email=?, pass=?, fullname=?,phone=?,address=?,birthday=?,gender=?,positionn=?,csalary=?,image=?,idroom=?,keyAES=?,idrfid=?,idfingerprint =? WHERE idrfid=? and idfingerprint =?";
+        String sql = "UPDATE employee SET email=?, pass=?, fullname=?,phone=?,address=?,birthday=?,gender=?,positionn=?,csalary=?,image=?,idroom=?,keyAES=?,idfingerprint =? WHERE idrfid=?";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, e.getEmail());
         pstmt.setString(2, e.getPass());
@@ -284,10 +286,10 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
         pstmt.setString(10, e.getImage());
         pstmt.setInt(11, e.getIdRoom());
         pstmt.setString(12, e.getKeyAES());
-        pstmt.setString(13, e.getIdRFID());
-        pstmt.setString(14, e.getIdFingerprint());
-        pstmt.setString(15, e.getIdRFID());
-        pstmt.setString(16, e.getIdFingerprint());
+        
+        pstmt.setString(13, e.getIdFingerprint());
+        pstmt.setString(14, e.getIdRFID());
+        
         pstmt.executeUpdate();
 
     }
@@ -357,10 +359,20 @@ public List<Employee> showAdmin(int idRoom) throws SQLException {
     }
 
     public boolean checkEmail(String email) throws SQLException {
-        String sql = "select * from employee where email = '" + email+"'";
+        String sql = "select * from employee where email = '" + email + "'";
         PreparedStatement pstmt = con.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
+            return true;
+        }
+        return false;
+
+    }
+    public boolean checkRFID(String RFID) throws SQLException {
+        String sql = "select * from employee where idRFID = '" + RFID + "'";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
             return true;
         }
         return false;

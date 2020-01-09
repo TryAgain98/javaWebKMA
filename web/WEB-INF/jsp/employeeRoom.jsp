@@ -58,28 +58,35 @@
                     <h2 class="PhongBan-contain__title--primary">Nhân Viên</h2>
                 </div>
                 <div class="PhongBan-contain__team row">
+
                     <c:forEach var="item" items="${lep}">
                         <div class="col-md-3">
-                            <div class="PhongBan-contain__team--img text-center">
-                        <c:if test="${quyen != 'Nhân Sự' || item.idRFID==idRFID}" >   <a href="/AdminKMA/detailEmployee?idRFID=${item.idRFID}&idFingerprint=${item.idFingerprint}&idRoom=${r.idRoom}"><img src="./images/${item.image}" alt=""
-                                                                               class="img-fluid PhongBan-contain__team--img--box"></a></c:if>
-                        <c:if test="${quyen == 'Nhân Sự' && item.idRFID!=idRFID}" >  
-                          <img src="./images/${item.image}" alt=""
-                                   class="img-fluid PhongBan-contain__team--img--box"></c:if>
+                            <div class="PhongBan-contain__team--linkhover">
+                                <c:if test="${quyen != 'Nhân Sự' || item.idRFID==idRFID}" >  
+                                    <a href="/AdminKMA/detailEmployee?idRFID=${item.idRFID}&idFingerprint=${item.idFingerprint}&idRoom=${r.idRoom}">
+                                        <div class="PhongBan-contain__team--img text-center">
+                                            <img src="./images/${item.image}" alt=""
+                                                 class="img-fluid PhongBan-contain__team--img--box">
+                                        </div>
+                                        <div class="PhongBan-contain__team--name text-center">
+                                            <h4>${item.fullName}</h4>
+                                            <p>${item.positionn}</p>
+                                        </div>
+                                    </a>  
+                                </c:if>
+                                  <c:if test="${quyen == 'Nhân Sự' && item.idRFID!=idRFID}" >    
+                                       <div class="PhongBan-contain__team--img text-center">
+                                            <img src="./images/${item.image}" alt=""
+                                                 class="img-fluid PhongBan-contain__team--img--box">
+                                        </div>
+                                        <div class="PhongBan-contain__team--name text-center">
+                                            <h4>${item.fullName}</h4>
+                                            <p>${item.positionn}</p>
+                                        </div>
+                                  </c:if>
+                            </div>
                         </div>
-                        <div class="PhongBan-contain__team--name text-center" style="pointer-events: none; 
-                             cursor: default; ">
-                        <c:if test="${quyen != 'Nhân Sự' && item.idRFID!=idRFID }" >   <a href="/AdminKMA/detailEmployee?idRFID=${item.idRFID}&idFingerprint=${item.idFingerprint}&idRoom=${r.idRoom}">
-                                <h4>${item.fullName}</h4>
-                                <p>${item.positionn}</p>
-                            </a></c:if>
-                        <c:if test="${quyen == 'Nhân Sự' || item.idRFID==idRFID}" >    
-
-                            <h4>${item.fullName}</h4>
-                            <p>${item.positionn}</p>
-                        </c:if>
-                    </div>
-                </div>
+                        
                     </c:forEach> 
 
 

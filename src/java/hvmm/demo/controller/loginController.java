@@ -151,6 +151,13 @@ public class loginController {
         List<Room> lr = mr.showKhoa_PhongBan();
         model.addAttribute("lr", lr);
         session.setAttribute("image", e.getImage());
+        
+        session.setAttribute("idFT", e.getIdFingerprint());
+        session.setAttribute("name", e.getFullName());
+       
+        session.setAttribute("quyen", e.getPowerful());
+        
+        
         model.addAttribute("inform", "Cập Nhật Thành Công");
         return "updateAdmin";
     }

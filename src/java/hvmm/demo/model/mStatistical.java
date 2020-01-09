@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -43,7 +44,7 @@ public class mStatistical {
         SimpleDateFormat dateFormatYear = new SimpleDateFormat("yyyy");
         String nowYear = dateFormatYear.format(date);
         int yearInt = Integer.parseInt(nowYear);
-        System.out.println("month : " + nowMonth);
+        
         if (nowMonth.equals("01")) {
             monthInt = 12;
             yearInt = yearInt - 1;
@@ -55,6 +56,73 @@ public class mStatistical {
 
     }
 
+    //list saturday and sunday trong khoang day
+    public List<String> ShowListSaturdaySunday(String dateStart, String dateEnd) throws ParseException {
+        List<String> lDate = new ArrayList<>();
+        DateFormat dateFormatD_M_Y = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormatY_M_D = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateS = dateFormatD_M_Y.parse(dateStart);
+        String dateEndString = D_M_YFormatY_M_D(dateEnd);// format sang dang string y-m-d
+        Date dateE = dateFormatY_M_D.parse(dateEndString);
+        Calendar c = Calendar.getInstance();
+        c.setTime(dateS);
+
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));// set lai cho c = date start
+
+        while (dateE.compareTo(c.getTime()) >= 0) {
+
+            String dateSaturdaySunday = "";
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SATURDAY) { // If it's Saturday skip to Monday
+
+                lDate.add(dateFormatD_M_Y.format(c.getTime()));
+
+                c.add(Calendar.DATE, 1);
+            } else if (dayOfWeek == Calendar.SUNDAY) { // If it's Saturday skip to Monday
+
+                lDate.add(dateFormatD_M_Y.format(c.getTime()));
+                c.add(Calendar.DATE, 6);
+            } else {
+                c.add(Calendar.DATE, 1);
+            }
+
+        }
+        for(String d:lDate){
+            System.out.println(d);
+        }
+        return lDate;
+    }
+// dem tong ngay thu 7 va cn trong khoang date
+        public int  countSaturdaySunday(String dateStart, String dateEnd) throws ParseException {
+        
+        DateFormat dateFormatD_M_Y = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormatY_M_D = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateS = dateFormatD_M_Y.parse(dateStart);
+        String dateEndString = D_M_YFormatY_M_D(dateEnd);// format sang dang string y-m-d
+        Date dateE = dateFormatY_M_D.parse(dateEndString);
+        Calendar c = Calendar.getInstance();
+        c.setTime(dateS);
+
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));// set lai cho c = date start
+        int total=0;
+        while (dateE.compareTo(c.getTime()) >= 0) {
+
+            String dateSaturdaySunday = "";
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SATURDAY) { // If it's Saturday skip to Monday
+               total++;
+                c.add(Calendar.DATE, 1);
+            } else if (dayOfWeek == Calendar.SUNDAY) { // If it's Saturday skip to Monday
+               total++;
+                c.add(Calendar.DATE, 6);
+            } else {
+                c.add(Calendar.DATE, 1);
+            }
+
+        }
+        return total;
+    }
+    
     public String D_M_YFormatY_M_D(String date) throws ParseException {
         SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date dateString = formatDate.parse(date);
@@ -70,8 +138,8 @@ public class mStatistical {
         String nowMonth = dateFormatMonth.format(dateString);
         return nowMonth;
     }
-
-    public int CountAboutDay(String dateStart, String dateEnd) {
+// tong ngay trong khoang ko tinh thu 7 va chu nhat
+    public int CountAboutDay(String dateStart, String dateEnd) throws ParseException {
         DateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
         Date date1 = null;
@@ -89,7 +157,8 @@ public class mStatistical {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (int) getDaysDiff + 1;
+        int totalSaturdaySunday=countSaturdaySunday(dateStart, dateEnd);
+        return (int) getDaysDiff + 1-totalSaturdaySunday;
     }
 
     public int formatMonth(String monthYear) throws ParseException {
@@ -97,7 +166,7 @@ public class mStatistical {
         Date dateString = formatDate.parse(monthYear);
         SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MM");
         String nowMonth = dateFormatMonth.format(dateString);
-        System.out.println(nowMonth);
+       
 
         return Integer.parseInt(nowMonth);
 
@@ -108,7 +177,7 @@ public class mStatistical {
         Date dateString = formatDate.parse(monthYear);
         SimpleDateFormat dateFormatMonth = new SimpleDateFormat("yyyy");
         String nowMonth = dateFormatMonth.format(dateString);
-        System.out.println(nowMonth);
+        
 
         return Integer.parseInt(nowMonth);
 
@@ -289,7 +358,7 @@ public class mStatistical {
             for (Statistical s : ls) {
 //                  System.out.println("s.date = "+s.getDatework()+"\t date = "+ld);
                 if (Y_M_DFormatD_M_Y(String.valueOf(ld)).equals(s.getDatework())) {
-                    System.out.println("s.date = " + s.getDatework() + "\t date = " + ld);
+                    
                     check = 1;
 
                 }
@@ -297,6 +366,25 @@ public class mStatistical {
             if (check == 0) {
                 lDayOff.add(Y_M_DFormatD_M_Y(String.valueOf(ld)));
             }
+        }
+        List<String> lSaturSunDay=ShowListSaturdaySunday(dateStart, dateEnd);
+        for(int i=0;i<lDayOff.size();){
+            
+            int check=0;
+            for(String daySaturSunday : lSaturSunDay){
+                
+                if(lDayOff.get(i).equals(daySaturSunday)){
+                    System.out.println(daySaturSunday);
+                    check=1;break;
+                }
+            }
+            if(check==1){
+                lDayOff.remove(i);
+            }
+            else{
+                i++;
+            }
+            System.out.println("size : "+lDayOff.size());
         }
 
         return lDayOff;
@@ -349,7 +437,7 @@ public class mStatistical {
     public List<Statistical> ListDayOnLateTimeEmployeeR(int idRoom, String dateStart, String dateEnd, List<Employee> lIdRFID) throws SQLException, ParseException {
         int totalDay = CountAboutDay(dateStart, dateEnd);
         List<Statistical> ls = new ArrayList<>();
-        for (Employee e: lIdRFID) {
+        for (Employee e : lIdRFID) {
             String sql = "select  *,e.idRFID as id,count(s.idRFID) as count from employee as e join statistical  as s on s.idRFID = e.idRFiD where idroom=? and checkDate='' and s.idRfid=? and  datework >= ?  and datework <= ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, idRoom);
@@ -688,17 +776,18 @@ public class mStatistical {
 
     public void deleteStatisticalIDRoom(int IDRoom) throws SQLException {
 
-        mEmployee me=new mEmployee();
-        for(Employee e:me.show(IDRoom)){
-        String sql = "delete from statistical where idRFID = ? ";
+        mEmployee me = new mEmployee();
+        for (Employee e : me.show(IDRoom)) {
+            String sql = "delete from statistical where idRFID = ? ";
 
-        try {
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, e.getIdRFID());
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(mEmployee.class.getName()).log(Level.SEVERE, null, ex);
-        }}
-        
+            try {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, e.getIdRFID());
+                pstmt.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(mEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 }
